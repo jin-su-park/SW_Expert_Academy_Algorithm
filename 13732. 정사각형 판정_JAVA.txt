@@ -1,0 +1,69 @@
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+
+public class solution_prac {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int T = sc.nextInt();
+        sc.nextLine();
+        for (int test_case = 1; test_case <= T; test_case++) {
+            int N=sc.nextInt();
+            sc.nextLine();
+            String[][]board=new String[N][N];
+            List<List<Integer>>res_1=new ArrayList<>();
+            List<List<Integer>>res_2=new ArrayList<>();
+            for(int i=0;i<N;i++){
+                String arr=sc.nextLine();
+                String[] str=arr.split("");
+                for(int j=0;j<N;j++){
+                    board[i][j]=str[j];
+                }
+            }
+            for(int i=0;i<N;i++) {
+                List<Integer> coordinate = new ArrayList<>();
+                for (int j = 0; j < N; j++) {
+                    if (board[i][j].equals("#")) {
+                        coordinate.add(j);
+                    }
+                }
+                res_1.add(coordinate);
+            }
+            for(int i=0;i<res_1.size();i++){
+                if(res_1.get(i).size()>0){
+                    res_2.add(res_1.get(i));
+                }
+            }
+            List<Integer>ans=res_2.get(0);
+            boolean check=true;
+            if (res_2.size()!=ans.size()){
+                check=false;
+            }else{
+                if(ans.size()==1){
+                    check=true;
+                }else{
+                    for(int i=1;i<res_2.size();i++){
+                        if(!res_2.get(i).containsAll(res_2.get(i-1))){
+                            check=false;
+                            break;
+                        }
+                    }
+                    for(int i=1;i<ans.size();i++){
+                        if(ans.get(i)!=ans.get(i-1)+1){
+                            check=false;
+                            break;
+                        }
+                    }
+                }
+            }
+            System.out.print("#"+test_case+" ");
+            if(check){
+                System.out.println("yes");
+            }else{
+                System.out.println("no");
+            }
+        }
+    }
+}
+
+
+
